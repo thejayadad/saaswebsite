@@ -24,7 +24,7 @@ const HomePage = () => {
   return (
     <div className='min-h-screen flex flex-col justify-center items-center'>
       <h1 className='font-bold text-4xl md:text-5xl lg:text-6xl'>Login</h1>
-      <p className={`pulse flex flex-col sm:text-3xl items-center`}>
+      <p className='pulse flex flex-col sm:text-3xl items-center'>
             To Your Dashboard
             <br />
             <FiArrowDown />

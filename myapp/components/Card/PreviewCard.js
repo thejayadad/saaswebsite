@@ -6,7 +6,7 @@ const PreviewCard = ({url, onClick}) => {
   return (
     <div>
      <div>
-        <Image src={url} alt='image' width={100} height={100} priority />
+        <Image src={url} alt='image' width={500} height={500} priority />
       </div>
       <button type='button' onClick={onClick} >Delete</button>
     </div>
