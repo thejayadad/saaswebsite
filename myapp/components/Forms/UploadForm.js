@@ -76,9 +76,10 @@ const UploadForm = () => {
                     className='cursor-pointer'
                     value={description} onChange={e => setDescription(e.target.value)} placeholder='Description' />
                 </div>
-                <div className='mb-6'>
+                <div className=''>
                     <label htmlFor='fileUpload' className='cursor-pointer'>
-                        <Input type='text' placeholder='Upload Image' readOnly className='cursor-pointer bg-gray-100 px-4 py-2 rounded-full' />
+                        <Input type='text'
+                        placeholder='Upload Image' readOnly className='cursor-pointer px-4 py-2 w-[80] rounded-full' />
                         <input id='fileUpload' type='file' accept='image/*' onChange={handleFileInput} className='hidden' />
                     </label>
                 </div>
