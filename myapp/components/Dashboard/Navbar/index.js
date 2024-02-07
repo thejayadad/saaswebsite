@@ -6,6 +6,7 @@ import { useSession } from 'next-auth/react'
 import { useRouter } from 'next/navigation'
 import LogoutButton from '@/components/Buttons/LogoutButton'
 import Logo from '@/components/Logo'
+import Modals from '@/components/Modal'
 
 const Navbar = () => {
     const session = useSession()
@@ -20,6 +21,7 @@ const Navbar = () => {
                 <Logo height={100} width={100} />
             </Link>
             <div className='flex items-center gap-2'>
+                <Modals />
                 <ThemeToggle />
                 <LogoutButton />
             </div>

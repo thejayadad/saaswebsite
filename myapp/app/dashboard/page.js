@@ -2,8 +2,7 @@ import HeadingText from '@/components/HeadingText';
 import Modals from '@/components/Modal';
 import { getPosts } from '@/lib/data';
 import React from 'react';
-import { Card, CardFooter, Image, Button } from '@nextui-org/react';
-import PolaroidCard from '@/components/Card/PolaroidCard';
+import CardList from '@/components/Card/CardList';
 
 const Dashboard = async () => {
     const posts = await getPosts();
@@ -19,17 +18,9 @@ const Dashboard = async () => {
                     <Modals />
                 </div>
             ) : (
-                <div className='grid gap-4 grid-cols-1 md:grid-cols-2 p-8 items-center justify-center'>
-                {posts.map((post) => (
-                    <div key={post.id}>
-                        <PolaroidCard
-                            imageUrl={post.secure_url}
-                            title={post.title}
-                            description={post.description}
-                        />
-                    </div>
-                ))}
-            </div>
+             <>
+             <CardList posts={posts} />
+             </>
             )}
         </main>
     );

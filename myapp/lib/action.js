@@ -53,9 +53,10 @@ export async function createPost(formData) {
         const secure_url = photos[0].secure_url; 
         const title = newPost.title;
         const description = newPost.description;
-
+        const public_id = photos[0].public_id; 
         const post = new Post({
             secure_url,
+            public_id,
             title,
             description
         });
@@ -69,5 +70,20 @@ export async function createPost(formData) {
         console.log("Error " + error);
         return { errMsg: error.message };
     }
-    revalidatePath("/dashboard")
 }
+
+export async function deletePost(public_id){
+    connectDB()
+    try {
+        await Promise.all([
+            Post.findOneAndDelete({ public_id }), 
+            cloudinary.v2.uploader.destroy(public_id)
+        ]);
+        revalidatePath("/dashboard");
+        return { msg: 'Delete Success!' };
+    } catch (error) {
+        console.log("error " + error);
+        return { errMsg: error.message };
+    }
+}
+
