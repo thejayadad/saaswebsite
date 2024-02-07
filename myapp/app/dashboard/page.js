@@ -18,8 +18,11 @@ const Dashboard = async () => {
                 <Modals />
                 </div>
             ) : (
-                <div>
-                    {/* Render posts here */}
+                <div className='grid gap-4 grid-cols-1 md:grid-cols-2 bg-orange p-8 items-center justify-center'>
+                    <div className='bg-red-200'>1</div>
+                    <div className='bg-purple-200'>2</div>
+                    <div className='bg-blue-200'>3</div>
+
                 </div>
             )}
    </main>

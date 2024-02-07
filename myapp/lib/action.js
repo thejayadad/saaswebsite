@@ -6,6 +6,7 @@ import os from 'os';
 import cloudinary from 'cloudinary';
 import connectDB from "./database";
 import Post from "@/models/Post";
+import { revalidatePath } from 'next/cache';
 
 cloudinary.config({
     cloud_name: process.env.CLOUD_NAME,
@@ -48,8 +49,8 @@ export async function createPost(formData) {
     connectDB()
     try {
         const newPost = await savePhotosToLocal(formData);
-        const photos = await uploadPhotosToCloudinary([newPost]); // Pass an array with the single photo object
-        const secure_url = photos[0].secure_url; // Get the secure_url for the uploaded image
+        const photos = await uploadPhotosToCloudinary([newPost]); 
+        const secure_url = photos[0].secure_url; 
         const title = newPost.title;
         const description = newPost.description;
 
@@ -61,10 +62,12 @@ export async function createPost(formData) {
         await post.save();
 
         await fs.unlink(newPost.filepath);
+        revalidatePath("/dashboard")
 
         return { msg: 'Post created successfully' };
     } catch (error) {
         console.log("Error " + error);
         return { errMsg: error.message };
     }
+    revalidatePath("/dashboard")
 }
