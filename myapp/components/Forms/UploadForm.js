@@ -4,6 +4,8 @@ import { useRef } from 'react';
 import PreviewCard from '../Card/PreviewCard';
 import SubmitButton from '../Buttons/SubmitButton';
 import { createPost } from '@/lib/action';
+import { Input } from "@nextui-org/react";
+import { Textarea } from "@nextui-org/react";
 
 const UploadForm = () => {
     const formRef = useRef();
@@ -11,7 +13,7 @@ const UploadForm = () => {
     const [title, setTitle] = useState('');
     const [description, setDescription] = useState('');
 
-    async function handleFileInput(e) {
+    const handleFileInput = (e) => {
         const selectedFile = e.target.files[0];
         if (selectedFile && selectedFile.size < 1024 * 1024 && selectedFile.type.startsWith('image/')) {
             setFile(selectedFile);
@@ -21,14 +23,26 @@ const UploadForm = () => {
         }
     }
 
-    function deleteImage() {
+    const handleDragOver = (e) => {
+        e.preventDefault();
+    }
+
+    const handleDrop = (e) => {
+        e.preventDefault();
+        const selectedFile = e.dataTransfer.files[0];
+        if (selectedFile && selectedFile.size < 1024 * 1024 && selectedFile.type.startsWith('image/')) {
+            setFile(selectedFile);
+        } else {
+            alert('Please select a valid image file (less than 1MB)');
+        }
+    }
+
+    const deleteImage = () => {
         setFile(null);
         formRef.current.reset();
     }
 
-    async function handleUpload(e) {
-        e.preventDefault(); // Prevent the default form submission behavior
-        
+    const handleUpload = async (e) => {
         const formData = new FormData();
         formData.append('title', title);
         formData.append('file', file); // Append the selected file
@@ -39,24 +53,36 @@ const UploadForm = () => {
             alert(`Error: ${res?.errMsg}`);
         } else {
             alert('Post created successfully');
-            setFile(null); // Reset the file state
+            setFile(null);
             setTitle(''); // Reset the title state
-            setDescription(''); // Reset the description state
-            formRef.current.reset(); // Reset the form
+            setDescription('');
+            formRef.current.reset();
         }
     }
 
     return (
-        <form onSubmit={handleUpload} ref={formRef}>
+        <form
+            className='flex flex-col gap-12 cursor-pointer'
+            onSubmit={handleUpload} ref={formRef}
+            onDragOver={handleDragOver} onDrop={handleDrop}>
             <div>
-                <input type='file' accept='image/*' onChange={handleFileInput} />
-                {file && <PreviewCard url={URL.createObjectURL(file)} onClick={deleteImage} />} 
-            </div>
-            <div>
-                <input type='text' value={title} onChange={e => setTitle(e.target.value)} placeholder='Title' />
-            </div>
-            <div>
-                <textarea value={description} onChange={e => setDescription(e.target.value)} placeholder='Description' />
+                <div className='mb-6'>
+                    <Input
+                    className='cursor-pointer'
+                    type='text' value={title} onChange={e => setTitle(e.target.value)} placeholder='Title' />
+                </div>
+                <div className='mb-6'>
+                    <Textarea 
+                    className='cursor-pointer'
+                    value={description} onChange={e => setDescription(e.target.value)} placeholder='Description' />
+                </div>
+                <div className='mb-6'>
+                    <label htmlFor='fileUpload' className='cursor-pointer'>
+                        <Input type='text' placeholder='Upload Image' readOnly className='cursor-pointer bg-gray-100 px-4 py-2 rounded-full' />
+                        <input id='fileUpload' type='file' accept='image/*' onChange={handleFileInput} className='hidden' />
+                    </label>
+                </div>
+                {file && <PreviewCard url={URL.createObjectURL(file)} onClick={deleteImage} />}
             </div>
             <SubmitButton value='Create Post' />
         </form>

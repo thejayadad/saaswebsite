@@ -1,6 +1,9 @@
 'use client'
 import React from 'react'
 import { useFormStatus } from 'react-dom'
+import Progress  from '../Progress'
+import {Button} from "@nextui-org/react";
+
 
 
 const SubmitButton = ({ value, ...props }) => {
@@ -8,11 +11,11 @@ const SubmitButton = ({ value, ...props }) => {
 
   return (
    <>
-   <button 
+   <Button 
    type='submit'
    disabled={pending} {...props}>
-      { pending ? 'Loading...' : value }
-    </button>
+      { pending ? <Progress /> : value }
+    </Button>
    </>
   )
 }

@@ -1,8 +1,10 @@
+import Navbar from '@/components/Dashboard/Navbar'
 import React from 'react'
 
 const layout = ({children}) => {
   return (
-    <div>layout
+    <div className='min-h-screen'>
+        <Navbar />
         {children}
     </div>
   )
