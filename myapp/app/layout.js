@@ -2,6 +2,8 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import { NextThemeProvider } from "@/lib/NextThemeProvider";
 import AuthProvider from "@/SessionProvider";
+import Toast from '@/components/Toast'; 
+
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -19,6 +21,7 @@ export default function RootLayout({ children }) {
         {children}
         </NextThemeProvider>
       </AuthProvider>
+      <Toast />
         </body>
     </html>
   );

@@ -4,6 +4,7 @@ import { FaTrash } from 'react-icons/fa';
 
 const PolaroidCard = ({ imageUrl, title, description, onClick }) => {
     const [isPending, startTransition] = useTransition();
+    
 
     return (
         <div className="relative bg-gray-100 dark:bg-white dark:text-gray-700 p-4 py-8 rounded-lg cursor-pointer transition duration-300 ease-in-out transform hover:scale-110 h-96">

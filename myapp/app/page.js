@@ -4,6 +4,8 @@ import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
 import LoginWithGoogle from '@/components/Buttons/LoginWithGoogle';
 import {FiArrowDown} from "react-icons/fi"
+import {  toast } from 'react-toastify';
+// import 'react-toastify/dist/ReactToastify.css';
 
 
 const HomePage = () => {
@@ -13,13 +15,12 @@ const HomePage = () => {
 
   useEffect(() => {
     if (session) {
+      toast.success('Successfully signed in!');
       router.replace('/dashboard');
+
     }
   }, [session, router]);
 
-  if (session) {
-    return null;
-  }
 
   return (
     <div className='min-h-screen flex flex-col justify-center items-center'>
